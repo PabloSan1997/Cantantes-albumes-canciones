@@ -20,7 +20,15 @@ export class Album{
   canciones:Cancion[];
 
   @ManyToMany(()=>Cantante, cantantes => cantantes.albumes)
-  @JoinTable()
+  @JoinTable({
+    name: 'album-cantantes',
+    joinColumn:{
+      name:'cantantes'
+    },
+    inverseJoinColumn:{
+      name:'albumes'
+    }
+  })
   cantantes:Cantante[]
 }
 

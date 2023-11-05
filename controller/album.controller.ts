@@ -32,4 +32,13 @@ export class ControladorAlbum {
             next(Boom.badImplementation());
         }
     }
+    async borrarAlbum(req: Request, res: Response, next: NextFunction){
+        try {
+            const { id_album } = req.params as { id_album: string };
+            await servicios.eliminarAlbum(id_album);
+            res.status(204).send();
+        } catch (error) {
+            next(Boom.notImplemented())
+        }
+    }
 }

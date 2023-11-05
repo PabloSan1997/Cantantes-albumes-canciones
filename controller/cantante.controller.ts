@@ -1,22 +1,46 @@
 import { SingerServicios } from "../services/cantante.service";
-import { Request, Response} from 'express';
+import { NextFunction, Request, Response } from 'express';
+import { templateResponse } from "../utilities/templateResponse";
+import Boom from '@hapi/boom';
 
 const servicios = new SingerServicios();
 
-export class CantanteController{
-    async leerCantantes(req:Request, res:Response){
-        const datos = await servicios.leerDatos();
-        res.json(datos);
+export class CantanteController {
+    async leerCantantes(req: Request, res: Response, next: NextFunction) {
+        try {
+            const datos = await servicios.leerDatos();
+            templateResponse(res, datos);
+        } catch (error) {
+            next(Boom.badImplementation());
+        }
     }
-    async leerCantantePK(req:Request, res:Response){
-        const {id_cantante} = req.params as {id_cantante:string};
-        console.log(id_cantante);
-        const datos = await servicios.leerUnDatoPk(id_cantante);
-        res.json(datos);
+    async leerCantantePK(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id_cantante } = req.params as { id_cantante: string };
+            const datos = await servicios.leerUnDatoPk(id_cantante);
+            templateResponse(res, datos);
+        } catch (error) {
+            if (typeof error == 'string') next(Boom.notFound(error));
+            else next(Boom.badImplementation());
+        }
     }
-    async agregarCantantes(req:Request, res:Response){
-        const cuerpo = req.body as CantanteReq;
-        const datos = await servicios.agregarDatos(cuerpo);
-        res.status(201).json({results:datos});
+    async agregarCantantes(req: Request, res: Response, next: NextFunction) {
+        try {
+            const cuerpo = req.body as CantanteReq;
+            const datos = await servicios.agregarDatos(cuerpo);
+            res.status(201).json({ results: datos });
+        } catch (error) {
+            if (typeof error == 'string') next(Boom.badRequest(error));
+            else next(Boom.badImplementation());
+        }
+    }
+    async eliminarCantante(req: Request, res: Response, next:NextFunction) {
+        try {
+            const { id_cantante } = req.params as { id_cantante: string };
+            await servicios.eliminarDatos(id_cantante);
+            res.status(204).send();
+        } catch (error) {
+            next(Boom.badImplementation());
+        }
     }
 }

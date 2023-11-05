@@ -7,4 +7,8 @@ const controller = new CancionController();
 
 routecancion.get('/', controller.leerCanciones);
 
+routecancion.get('/:id_cancion', controller.leerCancionPk);
+
 routecancion.post('/', controller.agregarCancion);
+
+routecancion.delete('/:id_cancion', controller.eliminarCancion);

@@ -11,12 +11,17 @@ export class SingerServicios{
     }
     async leerUnDatoPk(id_cantante:string){
         const repositorio = AppdataSource.getRepository(Cantante);
+        const reAlbum = AppdataSource.getRepository(Album);
         const dato = await repositorio.findOne({
-            where:{id_cantante},
-            relations:{albumes:true}
+            where:{id_cantante}
         });
         if(dato==null) throw 'No se econtro cancion';
-        return dato;
+        const album = await reAlbum.find({where:{cantantes:dato}, relations:{canciones:true}});
+        const mostrar = {
+            ...dato,
+            album
+        }
+        return mostrar;
     }
     async agregarDatos(cantanteNuevo:CantanteReq){
         const repositorio = AppdataSource.getRepository(Cantante);
@@ -30,6 +35,20 @@ export class SingerServicios{
         const cantante = repositorio.create({name, nationality, birthday, url_cantante});
         cantante.albumes=albumes;
         await repositorio.manager.save(cantante);
+        
         return cantante;
+    }
+    async eliminarDatos(id_cantante:string){
+        const repositorio = AppdataSource.getRepository(Cantante);
+        const reAlbum = AppdataSource.getRepository(Album);
+        const cantante = await repositorio.findOneBy({id_cantante});
+        if(!!cantante){
+            const album = await reAlbum.findOne({where:{cantantes:cantante}, relations:{cantantes:true}})
+            if(!!album) {
+                album.cantantes = album.cantantes.filter(p=>p.id_cantante!=cantante.id_cantante);
+                await reAlbum.manager.save(album);
+            }
+            await repositorio.delete({id_cantante});
+        }
     }
 }

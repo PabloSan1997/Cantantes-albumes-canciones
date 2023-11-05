@@ -6,12 +6,12 @@ import { Cancion } from "../database/models/Cancion";
 export class CancionServicio{
     async leerDatos(){
         const repositorio = AppdataSource.getRepository(Cancion);
-        const datos = await repositorio.find();
+        const datos = await repositorio.find({relations:{album:true}});
         return datos;
     }
     async leerDatoPk(id_cancion:string){
         const repositorio = AppdataSource.getRepository(Cancion);
-        const dato = await repositorio.findOneBy({id_cancion});
+        const dato = await repositorio.findOne({where:{id_cancion}, relations:{album:true}});
         if(dato==null) throw 'No se econtro cancion';
         return dato;
     }
@@ -24,5 +24,12 @@ export class CancionServicio{
         cancion.album = album;
         await repositorio.manager.save(cancion);
         return cancion;
+    }
+    async eliminarDatos(id_cancion:string){
+        const repositorio = AppdataSource.getRepository(Cancion);
+        const cancion = await repositorio.findOneBy({id_cancion});
+        if(!!cancion){
+            await repositorio.delete(cancion);
+        }
     }
 }

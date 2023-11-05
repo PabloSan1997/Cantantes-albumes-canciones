@@ -9,7 +9,7 @@ export class Cantante{
   @Column({length:200})
   name:string;
 
-  @Column({type:'timestamp with time zone'})
+  @Column()
   birthday:Date;
 
   @Column({length:200})

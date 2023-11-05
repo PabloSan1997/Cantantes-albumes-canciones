@@ -5,12 +5,12 @@ import { Cantante } from './Cantante';
 @Entity()
 export class Album{
   @PrimaryGeneratedColumn('uuid')
-  id_cantante:string;
+  id_album:string;
 
   @Column({length:200})
   name:string;
 
-  @Column({type:'timestamp with time zone'})
+  @Column()
   release:Date;
 
   @Column({length:5000})

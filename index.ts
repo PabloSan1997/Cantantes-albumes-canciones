@@ -5,11 +5,18 @@ import { createApi } from './routes/main';
 import "reflect-metadata";
 import { AppdataSource } from './database/confit';
 
-const app = express();
-AppdataSource.initialize().then(()=>console.log('conectado a la base de datos'));
-app.use(cors());
-app.use(express.json());
+AppdataSource.initialize().then(() => {
+    console.log('conectado a la base de datos');
+    inicio();
+});
 
-createApi(app);
+function inicio() {
+    const app = express();
 
-app.listen(variables.port,()=>console.log(`http://localhost:${variables.port}`));
+    app.use(cors());
+    app.use(express.json());
+
+    createApi(app);
+
+    app.listen(variables.port, () => console.log(`http://localhost:${variables.port}`));
+}

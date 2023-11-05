@@ -1,20 +1,21 @@
 import { Request, Response} from 'express';
 import { ServicioAlbum } from '../services/album.service';
+import { templateResponse } from '../utilities/templateResponse';
 
 const servicios = new ServicioAlbum();
 
 export class ControladorAlbum{
     async leerAlbums(req:Request, res:Response){
         const data = await servicios.leerDatos();
-        res.json(data);
+        templateResponse(res, data);
     }
     async leerAlbumPK(req:Request, res:Response){
         const {id_album} = req.params as {id_album:string};
         const datos = await servicios.leerDatosPorPK(id_album);
-        res.json(datos);
+        templateResponse(res, datos);
     }
     async crearAlbum(req:Request, res:Response){
         const album = await servicios.agregarDatos(req.body);
-        res.status(201).json({result:album});
+        templateResponse(res, album, 201, 'New data added');
     }
 }

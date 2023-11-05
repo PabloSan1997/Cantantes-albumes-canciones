@@ -1,6 +1,7 @@
 import { AppdataSource } from "../database/confit";
 import { Album } from "../database/models/Album";
 import { Cancion } from "../database/models/Cancion";
+import { Cantante } from "../database/models/Cantante";
 
 
 export class ServicioAlbum {
@@ -15,8 +16,7 @@ export class ServicioAlbum {
         const datos = await repositorio.findOne({
             where: {
                 id_album
-            },
-            relations: { canciones: true, cantantes:true }
+            }
         });
         if (!datos) throw 'No se encontro elemento';
         return datos;
@@ -30,16 +30,15 @@ export class ServicioAlbum {
     async eliminarAlbum(id_album:string){
         const repositorio = AppdataSource.getRepository(Album);
         const reCantion = AppdataSource.getRepository(Cancion);
-        const album = await repositorio.findOne({where:{id_album}, relations:{cantantes:true}});
+        const album = await repositorio.findOne({where:{id_album}, relations:{canciones:true, cantantes:true}});
         if(!!album){
-            album.cantantes=[];
-            await repositorio.manager.save(album);
-            const album2 =  await repositorio.findOne({where:{id_album}});
-            const canciones = await reCantion.find({where:{album}});
+            const canciones = album.canciones;
             await Promise.all(canciones.map(async p=>{
                 await reCantion.delete(p);
             }));
-            if(album2) await repositorio.delete(album2);
+            album.cantantes=[];
+            await repositorio.manager.save(album);
+            await repositorio.delete({id_album});
         }
     }
 }

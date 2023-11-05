@@ -7,6 +7,7 @@ export class CancionServicio{
     async leerDatos(){
         const repositorio = AppdataSource.getRepository(Cancion);
         const datos = await repositorio.find({relations:{album:true}});
+        
         return datos;
     }
     async leerDatoPk(id_cancion:string){

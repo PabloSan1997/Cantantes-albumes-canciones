@@ -6,22 +6,16 @@ import { Cantante } from "../database/models/Cantante";
 export class SingerServicios{
     async leerDatos(){
         const repositorio = AppdataSource.getRepository(Cantante);
-        const datos = await repositorio.find();
+        const datos = await repositorio.find({relations:{albumes:true}});
         return datos;
     }
     async leerUnDatoPk(id_cantante:string){
         const repositorio = AppdataSource.getRepository(Cantante);
-        const reAlbum = AppdataSource.getRepository(Album);
         const dato = await repositorio.findOne({
-            where:{id_cantante}
+            where:{id_cantante},
         });
         if(dato==null) throw 'No se econtro cancion';
-        const album = await reAlbum.find({where:{cantantes:dato}, relations:{canciones:true}});
-        const mostrar = {
-            ...dato,
-            album
-        }
-        return mostrar;
+        return dato;
     }
     async agregarDatos(cantanteNuevo:CantanteReq){
         const repositorio = AppdataSource.getRepository(Cantante);
@@ -40,14 +34,10 @@ export class SingerServicios{
     }
     async eliminarDatos(id_cantante:string){
         const repositorio = AppdataSource.getRepository(Cantante);
-        const reAlbum = AppdataSource.getRepository(Album);
         const cantante = await repositorio.findOneBy({id_cantante});
         if(!!cantante){
-            const album = await reAlbum.findOne({where:{cantantes:cantante}, relations:{cantantes:true}})
-            if(!!album) {
-                album.cantantes = album.cantantes.filter(p=>p.id_cantante!=cantante.id_cantante);
-                await reAlbum.manager.save(album);
-            }
+            cantante.albumes=[];
+            repositorio.manager.save(cantante);
             await repositorio.delete({id_cantante});
         }
     }

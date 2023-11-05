@@ -18,7 +18,8 @@ export class Cantante{
   @Column({length:5000})
   url_cantante:string;
 
-  @ManyToMany(()=>Album, albumes=>albumes.canciones)
+  @ManyToMany(()=>Album, albumes=>albumes.cantantes)
+  @JoinTable()
   albumes:Album[];
 }
 

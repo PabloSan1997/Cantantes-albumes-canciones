@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToMany} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable} from 'typeorm';
 import { Album } from './Album';
 
 @Entity()
@@ -19,6 +19,7 @@ export class Cantante{
   url_cantante:string;
 
   @ManyToMany(()=>Album, albumes=>albumes.canciones)
+  @JoinTable()
   albumes:Album[]
 }
 

@@ -12,12 +12,20 @@ export class UsuarioController {
     async loginUsuario(req: Request, res: Response, next: NextFunction) {
         try {
             const body = req.body as LoginUser;
-            console.log(body);
             const data = await servicio.loginUser(body);
-            templateResponse(res, data, 200);
+            res.json({token:data.token, permiso:true});
         } catch (error) {
-            if(typeof error == 'string') next(Boom.badData(error));
+            if (typeof error == 'string') next(Boom.badData(error));
             else next(Boom.badImplementation());
+        }
+    }
+    async loginToken(req: Request, res: Response, next: NextFunction) {
+        try {
+            const body = req.body as { token: string };
+            const data = await servicio.loginToken(body.token);
+            res.json({ token: data.token, permiso: true });
+        } catch (error) {
+            res.json({ token: '', permiso: false });
         }
     }
 }

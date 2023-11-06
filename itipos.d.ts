@@ -20,11 +20,17 @@ interface CantanteReq {
 }
 
 interface UsuarioReq {
-    name:string,
-    email:string,
-    password:string
+    name: string,
+    email: string,
+    password: string
 }
 interface LoginUser {
-    email:string,
-    password:string
+    email: string,
+    password: string
+}
+
+interface TokenReq {
+    admin: boolean,
+    email: string,
+    iat: number
 }

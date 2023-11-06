@@ -1,10 +1,13 @@
 import jwt from 'jsonwebtoken';
+import { variables } from './variables';
 
 export function crearToken(data:Object){
     const objeto = {...data};
-    return jwt.sign(objeto, 'hola');
+    if(!variables.word) throw 'Problemas con el inicio de secion';
+    return jwt.sign(objeto, variables.word);
 }
 export function verificarToken(token:string){
-    const objeto = jwt.verify(token, 'hola');
+    if(!variables.word) throw 'Problemas con el inicio de secion';
+    const objeto = jwt.verify(token, variables.word);
     return objeto;
 }

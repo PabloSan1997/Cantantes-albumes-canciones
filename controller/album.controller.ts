@@ -41,4 +41,15 @@ export class ControladorAlbum {
             next(Boom.notImplemented())
         }
     }
+    async editarAlbum(req: Request, res: Response, next: NextFunction){
+        try {
+            const { id_album } = req.params as { id_album: string };
+            const body = req.body as AlbumReq;
+            const datos = await servicios.editarAlbum(id_album, body);
+            templateResponse(res, datos);
+        } catch (error) {
+            const message = typeof error === 'string' ? Boom.notFound(error) : Boom.badImplementation();
+            next(message);
+        }
+    }
 }

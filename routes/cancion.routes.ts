@@ -12,3 +12,5 @@ routecancion.get('/:id_cancion', controller.leerCancionPk);
 routecancion.post('/', controller.agregarCancion);
 
 routecancion.delete('/:id_cancion', controller.eliminarCancion);
+
+routecancion.put('/:id_cancion', controller.editarCancion);

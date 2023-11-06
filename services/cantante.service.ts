@@ -41,4 +41,28 @@ export class SingerServicios{
             await repositorio.delete({id_cantante});
         }
     }
+    async editarCantante(cantante:CantanteReq, id_cantante:string){
+        const repositorio = AppdataSource.getRepository(Cantante);
+        const reAlbum = AppdataSource.getRepository(Album);
+        let buscar2 = await repositorio.findOne({where:{id_cantante}, relations:{albumes:true}});
+        if(!buscar2) throw 'No se encontro componente';
+        if(cantante.albumes.length!=0){
+            buscar2.albumes=[];
+            await repositorio.manager.save(buscar2);
+        }
+        const albumes = await Promise.all(cantante.albumes.map(async p =>{
+            const al = await reAlbum.findOneBy({id_album:p});
+            if(al==null) throw 'No se encontraron albumes';
+            return al;
+        }));
+        let buscar = await repositorio.findOne({where:{id_cantante}, relations:{albumes:true}}) as Cantante;
+        buscar.nationality=cantante.nationality;
+        buscar.birthday=cantante.birthday;
+        buscar.name=cantante.name;
+        buscar.url_cantante = cantante.url_cantante;
+        buscar.albumes = albumes;
+
+        await repositorio.manager.save(buscar);
+        return buscar;
+    }
 }

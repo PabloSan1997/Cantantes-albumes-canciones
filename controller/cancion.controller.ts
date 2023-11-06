@@ -43,4 +43,15 @@ export class CancionController {
             next(Boom.notImplemented());
         }
     }
+    async editarCancion(req: Request, res: Response, next: NextFunction) {
+        try {
+            const body = req.body as EditarCancion;
+            const { id_cancion } = req.params as { id_cancion: string }
+            const dato = await servicio.editarCancion(body, id_cancion);
+            templateResponse(res, dato, 200);
+        } catch (error) {
+            if(typeof error == 'string') next(Boom.badRequest(error));
+            else next(Boom.badImplementation());
+        }
+    }
 }

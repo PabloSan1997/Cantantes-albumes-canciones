@@ -41,4 +41,15 @@ export class ServicioAlbum {
             await repositorio.delete({id_album});
         }
     }
+    async editarAlbum(id_album:string, album:AlbumReq ){
+        const repositorio = AppdataSource.getRepository(Album);
+        const buscar = await repositorio.findOne({where:{id_album}});
+        if(!buscar) throw 'No se encontro elemento';
+        buscar.name = album.name;
+        buscar.release=album.release;
+        buscar.url_album = album.url_album;
+        await repositorio.manager.save(buscar);
+        return buscar;
+
+    }
 }

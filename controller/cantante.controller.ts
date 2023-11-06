@@ -43,4 +43,14 @@ export class CantanteController {
             next(Boom.badImplementation());
         }
     }
+    async editarCantante(req: Request, res: Response, next:NextFunction){
+        // try {
+            const { id_cantante } = req.params as { id_cantante: string };
+            const body = req.body as CantanteReq;
+            const dato = await servicios.editarCantante(body, id_cantante);
+            templateResponse(res, dato);
+        // } catch (error) {
+        //     next(Boom.badImplementation());
+        // }
+    }
 }

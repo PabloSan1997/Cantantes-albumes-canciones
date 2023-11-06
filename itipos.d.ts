@@ -10,9 +10,6 @@ interface CancionReq {
     song_duration:string,
     id_album:string
 }
-interface EditarCancion extends CancionReq {
-    id_cancion:string
-}
 
 interface CantanteReq{
     name:string,

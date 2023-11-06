@@ -5,6 +5,7 @@ import { createApi } from './routes/main';
 import "reflect-metadata";
 import { AppdataSource } from './database/confit';
 import { boomHandle } from './middleware/boomHandle';
+import { advertHandle } from './middleware/advertHandle';
 
 AppdataSource.initialize().then(() => {
     console.log('conectado a la base de datos');
@@ -16,6 +17,7 @@ function inicio() {
 
     app.use(cors());
     app.use(express.json());
+    app.use(advertHandle);
 
     createApi(app);
 

@@ -33,7 +33,7 @@ export class CancionServicio{
             await repositorio.delete(cancion);
         }
     }
-    async editarCancion(cancion:EditarCancion, id_cancion:string){
+    async editarCancion(cancion:CancionReq, id_cancion:string){
         const repositorio = AppdataSource.getRepository(Cancion);
         const reAlbum = AppdataSource.getRepository(Album);
 

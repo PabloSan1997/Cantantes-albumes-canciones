@@ -45,8 +45,8 @@ export class CancionController {
     }
     async editarCancion(req: Request, res: Response, next: NextFunction) {
         try {
-            const body = req.body as EditarCancion;
-            const { id_cancion } = req.params as { id_cancion: string }
+            const body = req.body as CancionReq;
+                const { id_cancion } = req.params as { id_cancion: string }
             const dato = await servicio.editarCancion(body, id_cancion);
             templateResponse(res, dato, 200);
         } catch (error) {

@@ -6,13 +6,14 @@ import { Cantante } from "../database/models/Cantante";
 export class SingerServicios{
     async leerDatos(){
         const repositorio = AppdataSource.getRepository(Cantante);
-        const datos = await repositorio.find({relations:{albumes:true}});
+        const datos = await repositorio.find();
         return datos;
     }
     async leerUnDatoPk(id_cantante:string){
         const repositorio = AppdataSource.getRepository(Cantante);
         const dato = await repositorio.findOne({
             where:{id_cantante},
+            relations:{albumes:true}
         });
         if(dato==null) throw 'No se econtro cancion';
         return dato;

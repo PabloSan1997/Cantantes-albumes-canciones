@@ -12,7 +12,4 @@ export function createApi(app:Express){
     main.use('/song', routecancion);
     main.use('/singer', routecantantes);
     main.use('/user', routerusuario);
-    main.get('/', (req,res)=>{
-        res.json({message:"hola a todos"});
-    });
 }

@@ -14,7 +14,7 @@ AppdataSource.initialize().then(() => {
 
 function inicio() {
     const app = express();
-
+    app.use('/', express.static('listsongs'));
     app.use(cors());
     app.use(express.json());
     app.use(advertHandle);
@@ -22,6 +22,7 @@ function inicio() {
     createApi(app);
 
     app.use(boomHandle);
+
 
     app.listen(variables.port, () => console.log(`http://localhost:${variables.port}`));
 }

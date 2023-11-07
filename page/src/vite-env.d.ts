@@ -52,6 +52,9 @@ interface Cancion {
 interface CancionAlbumImage extends Cancion{
     url_album: string;
 }
+interface CancionRelacion extends Cancion{
+    album: Album
+}
 interface Cantante {
     id_cantante:string,
     name:string,
@@ -59,8 +62,15 @@ interface Cantante {
     nationality:string,
     url_cantante:string
 }
-
+interface CantanteRelacion extends Cantante{
+    albumes:Album[]
+}
 //-------Context---------
 type Children = {
     children:JSX.Element|JSX.Element[]
+}
+type Contexto={
+    albumes:Album[],
+    canciones:CancionAlbumImage[],
+    singers:Cantante[]
 }

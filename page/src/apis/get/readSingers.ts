@@ -1,7 +1,7 @@
 import { baseApi } from "../baseUrl";
 
-export async function readAlbum():Promise<Album[]>{
-    const ft = await fetch(`${baseApi}/album`,{
+export async function readSinger():Promise<Cantante[]>{
+    const ft = await fetch(`${baseApi}/singer`,{
         method:'GET',
         headers:{
             advert:import.meta.env.VITE_ADVERT
@@ -11,8 +11,8 @@ export async function readAlbum():Promise<Album[]>{
     return data.results;
 }
 
-export async function readAlbumByPk(id:string):Promise<AlbumRelations> {
-    const ft = await fetch(`${baseApi}/album/${id}`,{
+export async function readSingerByPk(id:string):Promise<CantanteRelacion> {
+    const ft = await fetch(`${baseApi}/singer/${id}`,{
         method:'GET',
         headers:{
             advert:import.meta.env.VITE_ADVERT

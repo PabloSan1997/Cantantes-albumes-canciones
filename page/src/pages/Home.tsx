@@ -1,4 +1,8 @@
 
 export function Home() {
-  return <div>Home</div>;
+  return (
+    <div className="hola">
+      <p>hola</p>
+    </div>
+  );
 }

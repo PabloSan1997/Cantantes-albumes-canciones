@@ -3,6 +3,7 @@ import { Home } from './pages/Home';
 import { Song } from './pages/Song';
 import { Singer } from './pages/Singer';
 import { Album } from './pages/Album';
+import { Header } from './components/Header';
 
 const Rutas = () => useRoutes([
   {
@@ -35,6 +36,7 @@ function App() {
 
   return (
     <HashRouter>
+      <Header/>
       <Rutas/>
     </HashRouter>
   )

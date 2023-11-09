@@ -9,21 +9,24 @@ const Context = React.createContext({});
 export function Provedor({ children }: Children) {
     const [albumes, setAlbum] = React.useState<Album[]>([]);
     const [canciones, setCanciones] = React.useState<CancionAlbumImage[]>([]);
-    const [singers, setSinger] = React.useState<Cantante[]>();
+    const [singers, setSinger] = React.useState<Cantante[]>([]);
 
     React.useEffect(() => {
         readAlbum()
-            .then(data => setAlbum(data));
+            .then(data => setAlbum(data))
+            .catch(()=>setAlbum([]));
     }, []);
     React.useEffect(() => {
         readCancion()
-            .then(data => setCanciones(data));
+            .then(data => setCanciones(data))
+            .catch(()=>setCanciones([]));
     }, []);
     React.useEffect(() => {
         readSinger()
-            .then(data => setSinger(data));
+            .then(data => setSinger(data))
+            .catch(()=>setSinger([]));
     }, []);
-    console.log(singers);
+    
     return (
         <Context.Provider value={{
             albumes,

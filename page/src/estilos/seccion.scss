@@ -1,0 +1,92 @@
+.seccion {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 3rem auto 0 auto;
+
+    h2 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        margin-left: 1.8rem;
+        margin-top: 2rem;
+    }
+
+    .cajas {
+        width: 95%;
+        margin: 1rem auto;
+        display: grid;
+        gap: 3rem;
+        grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr));
+
+        .caja {
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            border-radius: 10px;
+
+            &.caja-album {
+                span {
+                    font-size: 1.2rem;
+                    margin-bottom: 1rem;
+                }
+            }
+
+            &.caja-cancion {
+                span {
+                    font-size: 1.2rem;
+                    margin-bottom: 1rem;
+                }
+            }
+
+            &.caja-cantante {}
+
+            .foto {
+                max-width: 92%;
+                margin: 1rem auto;
+            }
+
+            h3 {
+                margin: auto auto 0.5rem auto;
+                font-size: 2rem;
+            }
+
+            span {
+                margin-left: 4%;
+            }
+
+        }
+    }
+}
+
+.seccion{
+    &.singer{
+        background: black;
+        h2{
+            color: white;
+        }
+        .caja{
+           background: rgb(51, 49, 49);
+           color: white;
+        }
+    }
+    &.cancion{
+        background: rgb(0, 14, 1);
+        h2{
+            color: rgb(107, 235, 90);
+        }
+        .caja{
+            background: rgb(13, 78, 4);
+            color:rgb(210, 248, 210);
+        }
+    }
+    &.album{
+        background: rgb(14, 2, 0);
+        h2{
+            color: rgb(240, 198, 198);
+        }
+        .caja{
+            background: rgb(133, 6, 6);
+            color:rgb(238, 188, 188);
+        }
+    }
+}

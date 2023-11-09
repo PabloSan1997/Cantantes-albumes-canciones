@@ -1,0 +1,17 @@
+@import 'colores.scss';
+
+header{
+    width: 100%;
+    background: $header;
+    display: flex;
+    padding: 1rem 0;
+    .logo{
+        width: 45px;
+        margin: 0 2rem;
+    }
+    h1{
+        color: rgb(183, 241, 196);
+        font-size: 2.8rem;
+        margin: auto 0;
+    }
+}
